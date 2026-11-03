@@ -1,87 +1,314 @@
 <!DOCTYPE html>
-<!--
-  豆时 BEANTIME · 站点首页
-  这个仓库只用于托管对外公开的说明页，供 App Store Connect 的
-  「支持 URL」与「隐私政策 URL」使用。
--->
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>豆时 BEANTIME</title>
+<title>豆时 BEANTIME · 把每一支豆，都喝明白</title>
+<meta name="description" content="咖啡豆库存、赏味期倒计时、冲煮记录与统计。全程离线，数据只存在你的设备上。">
+<meta property="og:title" content="豆时 BEANTIME · 把每一支豆，都喝明白">
+<meta property="og:description" content="赏味期还剩几天、这一杯几分、这支豆值不值得再买——都在一个地方。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://beantime.app/">
+<meta property="og:image" content="https://beantime.app/img/og.jpg">
+<meta name="theme-color" content="#FBF9F2">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232F5D4C'/><ellipse cx='50' cy='54' rx='22' ry='28' transform='rotate(-18 50 54)' fill='%23E8D9B8'/><path d='M50 30c8 10 8 34 0 48' stroke='%232F5D4C' stroke-width='4' fill='none' transform='rotate(-18 50 54)'/></svg>">
 <style>
-  :root {
-    --bg: #FBF7F0; --card: #FFFFFF; --ink: #2E211A; --sub: #6B5B4F;
-    --line: #E8DFD2; --accent: #A9683C;
+  :root{
+    --bg:#FBF9F2; --card:#FFFFFF; --ink:#1F3A31; --sub:#6E6154;
+    --line:#E7E0D1; --accent:#2F5D4C; --gold:#CBA35A; --deep:#1B3529;
+    --milk:#F4F1E7;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
-    font: 16px/1.7 -apple-system, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    display: flex; align-items: center; justify-content: center;
-    padding: 40px 22px;
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--ink); overflow-x:clip;
+    font:400 17px/1.75 "PingFang SC","SF Pro Text",-apple-system,"Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap { width: 100%; max-width: 560px; }
-  .brand {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; letter-spacing: .14em; color: var(--accent);
-    text-transform: uppercase; font-weight: 600;
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  a{color:inherit;text-decoration:none;}
+
+  /* 顶部 */
+  nav{
+    display:flex;align-items:center;gap:10px;
+    padding:26px 0;
   }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-  h1 {
-    font-size: 38px; line-height: 1.2; margin: 16px 0 10px;
-    letter-spacing: -1px;
+  .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:.02em;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+  .brand small{font-size:11.5px;letter-spacing:.2em;color:var(--sub);font-weight:500;}
+  nav .links{margin-left:auto;display:flex;gap:26px;font-size:14.5px;color:var(--sub);}
+  nav .links a:hover{color:var(--accent);}
+
+  /* 首屏 */
+  header.wrap{padding:56px 24px 34px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;letter-spacing:.18em;color:var(--accent);font-weight:600;
   }
-  .sub { font-size: 16px; color: var(--sub); margin: 0 0 32px; }
-  .links { display: grid; gap: 12px; }
-  a.card {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 18px 20px; background: var(--card); border: 1px solid var(--line);
-    border-radius: 14px; color: var(--ink); text-decoration: none;
-    transition: border-color .16s ease, transform .16s ease;
+  .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  h1{
+    margin:22px 0 0;font-size:clamp(40px,6.2vw,74px);line-height:1.22;
+    letter-spacing:-2px;font-weight:700;
   }
-  a.card:hover { border-color: var(--accent); transform: translateY(-1px); }
-  .card b { display: block; font-size: 15.5px; font-weight: 600; margin-bottom: 2px; }
-  .card span { font-size: 13.5px; color: var(--sub); }
-  .arrow { color: var(--accent); font-size: 16px; }
-  footer {
-    margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line);
-    font-size: 12.5px; color: var(--sub); line-height: 1.8;
+  .lede{
+    margin-top:26px;max-width:600px;font-size:clamp(16px,1.9vw,19px);
+    color:var(--sub);line-height:1.85;
   }
-  footer a { color: var(--accent); text-decoration: none; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #1B1512; --card: #241C18; --ink: #F3EAE0; --sub: #B8A798; --line: #3A2E27; }
+  .cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:34px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:13px 24px;border-radius:999px;font-size:15.5px;font-weight:600;
+    background:var(--accent);color:#FBF9F2;
+    box-shadow:0 10px 24px rgba(47,93,76,.22);
+  }
+  .btn.ghost{background:transparent;color:var(--accent);box-shadow:none;border:1px solid rgba(47,93,76,.28);}
+  .btn.soon{background:rgba(47,93,76,.08);color:var(--accent);box-shadow:none;cursor:default;}
+  .btn.soon b{font-weight:600;}
+  .btn.soon span{font-size:12px;letter-spacing:.06em;color:var(--sub);font-weight:500;}
+
+  /* 手机 */
+  .phones{
+    display:flex;justify-content:center;align-items:flex-end;gap:26px;
+    margin-top:64px;padding-bottom:10px;position:relative;
+  }
+  .phones::before{
+    content:"";position:absolute;left:50%;top:6%;transform:translateX(-50%);
+    width:min(820px,100vw);height:600px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(203,163,90,.16) 0%,rgba(203,163,90,0) 66%);
+  }
+  .phone{
+    width:264px;padding:9px;border-radius:42px;
+    background:linear-gradient(160deg,#3C3C3C,#101010 42%,#2C2C2C);
+    box-shadow:0 34px 70px rgba(20,40,32,.26),0 6px 16px rgba(20,40,32,.16);
+    outline:1px solid rgba(255,255,255,.14);
+    transition:transform .5s cubic-bezier(.2,.7,.3,1);
+  }
+  .phone img{display:block;width:100%;border-radius:32px;}
+  .phone:nth-child(1){transform:translateY(26px) rotate(-3deg);}
+  .phone:nth-child(3){transform:translateY(26px) rotate(3deg);}
+  .phones:hover .phone{transform:translateY(16px) rotate(0);}
+  .phone.mid{width:296px;}
+
+  /* 章节 */
+  section{padding:110px 0;}
+  section.wrap{padding:110px 24px;}
+  .kicker{font-size:12.5px;letter-spacing:.18em;color:var(--gold);font-weight:600;}
+  h2{
+    margin:16px 0 0;font-size:clamp(28px,3.6vw,42px);line-height:1.32;
+    letter-spacing:-.8px;font-weight:700;max-width:16em;
+  }
+  .body-text{margin-top:20px;color:var(--sub);max-width:31em;font-size:16.5px;line-height:1.9;}
+
+  .split{display:grid;grid-template-columns:1fr auto;gap:76px;align-items:center;max-width:980px;margin:0 auto;}
+  .split.rev{grid-template-columns:auto 1fr;}
+  .split .phone{width:296px;}
+  .split.rev .text{order:2;}
+
+  .point{display:flex;gap:12px;margin-top:16px;color:var(--sub);font-size:15.5px;}
+  .point b{color:var(--ink);font-weight:600;}
+  .point .tick{color:var(--accent);flex:none;}
+
+  /* 功能网格 */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+  .cell{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:26px 24px 24px;
+  }
+  .cell h3{font-size:16.5px;font-weight:600;margin-bottom:8px;}
+  .cell p{font-size:14.5px;color:var(--sub);line-height:1.8;}
+  .cell .ico{
+    width:34px;height:34px;border-radius:11px;background:var(--milk);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .cell svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.6;}
+
+  /* 隐私 */
+  .privacy{
+    background:var(--deep);color:#F3EEE2;border-radius:28px;
+    padding:72px 56px;
+  }
+  .privacy .kicker{color:var(--gold);}
+  .privacy h2{color:#FBF9F2;}
+  .privacy p{color:#B9CBBF;margin-top:20px;max-width:40em;font-size:16.5px;line-height:1.95;}
+  .privacy .row{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;}
+  .privacy .row div{font-size:14px;color:#9DB3A5;}
+  .privacy .row b{display:block;font-size:26px;color:#FBF9F2;font-weight:600;margin-bottom:2px;letter-spacing:-.5px;}
+
+  footer{padding:56px 0 56px;color:var(--sub);font-size:13.5px;}
+  footer .frow{display:flex;gap:22px;flex-wrap:wrap;align-items:center;padding-top:26px;border-top:1px solid var(--line);}
+  footer a:hover{color:var(--accent);}
+  footer .mail{margin-left:auto;}
+
+  @media (max-width:900px){
+    .split,.split.rev{grid-template-columns:1fr;gap:44px;}
+    .split.rev .text{order:0;}
+    .grid{grid-template-columns:1fr 1fr;}
+    .phones{gap:14px;}
+    .phone{width:calc(33.3% - 10px);}
+    .phone.mid{width:calc(33.3% - 10px);}
+    .privacy{padding:52px 28px;border-radius:22px;margin:0 16px;}
+    section{padding:76px 0;}
+    section.wrap{padding:76px 24px;}
+  }
+  @media (max-width:620px){
+    .phones{margin-top:44px;}
+    .phone:nth-child(1),.phone:nth-child(3){display:none;}
+    .phone.mid{width:76%;}
+    .grid{grid-template-columns:1fr;}
+    nav .links{gap:16px;font-size:13.5px;}
+    .lede{font-size:16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .phone{transition:none;}
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <span class="brand"><span class="dot"></span>豆时 · BEANTIME</span>
-    <h1>把每一支豆，<br>都喝明白。</h1>
-    <p class="sub">咖啡豆库存、冲煮记录与赏味追踪。数据只存在你的设备上，全程离线。</p>
 
-    <div class="links">
-      <a class="card" href="./support.html">
-        <div>
-          <b>支持与帮助</b>
-          <span>常见问题、数据备份与迁移、联系方式</span>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-      <a class="card" href="./privacy.html">
-        <div>
-          <b>隐私政策</b>
-          <span>我们不收集任何数据，原因写在这里</span>
-        </div>
-        <span class="arrow">→</span>
-      </a>
-    </div>
+<div class="wrap">
+  <nav>
+    <span class="brand"><span class="dot"></span>豆时 <small>BEANTIME</small></span>
+    <span class="links">
+      <a href="#features">功能</a>
+      <a href="./privacy.html">隐私政策</a>
+      <a href="./support.html">支持</a>
+    </span>
+  </nav>
+</div>
 
-    <footer>
-      豆时 BEANTIME · 由个人开发者独立完成<br>
-      本页由 GitHub Pages 托管，仅用于展示公开说明文档。
-    </footer>
+<header class="wrap">
+  <span class="eyebrow"><i></i>咖啡豆库存与赏味管理</span>
+  <h1>把每一支豆，<br>都喝明白。</h1>
+  <p class="lede">
+    记下烘焙日期，剩下的交给它——赏味期倒计时、库存自动扣减、每杯成本与评分，
+    连同「这家值不值得再买」，都在一个地方。
+  </p>
+  <div class="cta">
+    <span class="btn soon">App Store <span>即将上线</span></span>
+    <a class="btn ghost" href="#features">看看它能做什么</a>
   </div>
+
+  <div class="phones">
+    <div class="phone"><img src="./img/detail.jpg" alt="单支豆的剩余赏味与单杯成本" loading="lazy"></div>
+    <div class="phone mid"><img src="./img/home.jpg" alt="首页：赏味总览与在库豆卡"></div>
+    <div class="phone"><img src="./img/stats.jpg" alt="统计：花费、消耗与产地分布" loading="lazy"></div>
+  </div>
+</header>
+
+<section class="wrap">
+  <div class="split">
+    <div class="text">
+      <span class="kicker">赏味期</span>
+      <h2>它记得每一支豆，<br>是哪天烘的。</h2>
+      <p class="body-text">
+        入库时填一次烘焙日，之后全部自动：养豆还差几天、赏味期剩多少、哪一天该喝掉、什么时候已经太迟。
+        首页最上面就是所有豆子的状态分布，不用一个个点开算。
+      </p>
+      <div class="point"><span class="tick">·</span><span><b>超过赏味期太久</b>的豆会单独提示「冷萃、奶咖或报废」，而不是继续混在待喝列表里。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>开封即变状态</b>，不需要你维护第二个字段。</span></div>
+    </div>
+    <div class="phone"><img src="./img/detail.jpg" alt="单支豆的剩余赏味与单杯成本" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="split rev">
+    <div class="text">
+      <span class="kicker">统计</span>
+      <h2>一年喝了多少，<br>不用凭感觉。</h2>
+      <p class="body-text">
+        克数、杯数、花费、产地分布，边喝边算清。其中「最佳赏味曲线」会把同一支豆在不同豆龄的评分汇总起来，
+        告诉你它的甜区在第几天——下次买同一支，就知道该等多久再开。
+      </p>
+      <div class="point"><span class="tick">·</span><span><b>豆子 / 冲煮 / 消耗</b>三个维度分开看，卡片可以自己增删排序。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>单杯成本</b>按实际消耗加权，不是「总价除以杯数」。</span></div>
+    </div>
+    <div class="phone"><img src="./img/curve.jpg" alt="最佳赏味曲线" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="split">
+    <div class="text">
+      <span class="kicker">回购</span>
+      <h2>喝过的好豆，<br>下次记得再买。</h2>
+      <p class="body-text">
+        想喝的进心愿单，喝过的点一下「想回购」。回购条目记着当时的克重、价格、杯数与平均分；
+        点「再买一次」，表单已经按上次的规格填好，直接生成新批次。
+      </p>
+      <div class="point"><span class="tick">·</span><span>来源豆被删掉也不影响——<b>快照还在</b>。</span></div>
+      <div class="point"><span class="tick">·</span><span>同一个页面切换<b>想喝 / 想回购</b>，不用记两个入口。</span></div>
+    </div>
+    <div class="phone"><img src="./img/wish.jpg" alt="心愿单与回购清单" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="wrap" id="features">
+  <span class="kicker">还有这些</span>
+  <h2>不需要额外整理，<br>边喝边就记完了。</h2>
+
+  <div class="grid">
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 3-4 6 6"/><path d="M3 21h18"/></svg></div>
+      <h3>库存曲线</h3>
+      <p>每一次取用都留下节点，这支豆是怎么一点点喝完的，看得见。</p>
+    </div>
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12l-1.5 7a4.5 4.5 0 01-9 0L6 3z"/><path d="M12 14v7"/><path d="M8 21h8"/></svg></div>
+      <h3>冲煮记录</h3>
+      <p>克重、水温、时长、评分与品鉴笔记。下次复现好喝的那一杯。</p>
+    </div>
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+      <h3>产地分布</h3>
+      <p>这一年喝过的豆来自哪几个国家，一张地图看完，不用翻清单。</p>
+    </div>
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+      <h3>品牌档案</h3>
+      <p>多久买一次、买过的豆喝完了几支、平均打几分。数字比印象可靠。</p>
+    </div>
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.8 8.6a5 5 0 00-8.8-2.4 5 5 0 00-8.8 2.4c0 4.6 8.8 9.4 8.8 9.4s8.8-4.8 8.8-9.4z"/></svg></div>
+      <h3>心愿单与回购</h3>
+      <p>想试的先记下，喝过觉得好的标回购，一键按上次规格再买一次。</p>
+    </div>
+    <div class="cell">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
+      <h3>备份导出</h3>
+      <p>导出成 ZIP 存进「文件」App，换手机时导回来，豆子和记录都在。</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="privacy">
+    <span class="kicker">隐私</span>
+    <h2>没有账号，没有云端，<br>也没有广告。</h2>
+    <p>
+      所有内容都存在这台设备的沙盒里，卸载即消失。没有网络请求，没有第三方 SDK，照片也不会上传。
+      正因为数据只在你手上，我们把「导出备份」做得很显眼——换手机之前，记得导一份。
+    </p>
+    <div class="row">
+      <div><b>0</b>网络请求</div>
+      <div><b>0</b>账号与注册</div>
+      <div><b>0</b>内购与订阅</div>
+      <div><b>4+</b>年龄分级</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="frow">
+      <span>© 2026 豆时 BEANTIME</span>
+      <a href="./privacy.html">隐私政策</a>
+      <a href="./support.html">支持与帮助</a>
+      <span class="mail"><a href="mailto:support@beantime.app">support@beantime.app</a></span>
+    </div>
+  </footer>
+</div>
+
 </body>
 </html>
