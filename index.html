@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  豆时 BEANTIME · 站点首页
+  这个仓库只用于托管对外公开的说明页，供 App Store Connect 的
+  「支持 URL」与「隐私政策 URL」使用。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>豆时 BEANTIME</title>
+<style>
+  :root {
+    --bg: #FBF7F0; --card: #FFFFFF; --ink: #2E211A; --sub: #6B5B4F;
+    --line: #E8DFD2; --accent: #A9683C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font: 16px/1.7 -apple-system, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex; align-items: center; justify-content: center;
+    padding: 40px 22px;
+  }
+  .wrap { width: 100%; max-width: 560px; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .14em; color: var(--accent);
+    text-transform: uppercase; font-weight: 600;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  h1 {
+    font-size: 38px; line-height: 1.2; margin: 16px 0 10px;
+    letter-spacing: -1px;
+  }
+  .sub { font-size: 16px; color: var(--sub); margin: 0 0 32px; }
+  .links { display: grid; gap: 12px; }
+  a.card {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 20px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; color: var(--ink); text-decoration: none;
+    transition: border-color .16s ease, transform .16s ease;
+  }
+  a.card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .card b { display: block; font-size: 15.5px; font-weight: 600; margin-bottom: 2px; }
+  .card span { font-size: 13.5px; color: var(--sub); }
+  .arrow { color: var(--accent); font-size: 16px; }
+  footer {
+    margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--sub); line-height: 1.8;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1B1512; --card: #241C18; --ink: #F3EAE0; --sub: #B8A798; --line: #3A2E27; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="brand"><span class="dot"></span>豆时 · BEANTIME</span>
+    <h1>把每一支豆，<br>都喝明白。</h1>
+    <p class="sub">咖啡豆库存、冲煮记录与赏味追踪。数据只存在你的设备上，全程离线。</p>
+
+    <div class="links">
+      <a class="card" href="./support.html">
+        <div>
+          <b>支持与帮助</b>
+          <span>常见问题、数据备份与迁移、联系方式</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card" href="./privacy.html">
+        <div>
+          <b>隐私政策</b>
+          <span>我们不收集任何数据，原因写在这里</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <footer>
+      豆时 BEANTIME · 由个人开发者独立完成<br>
+      本页由 GitHub Pages 托管，仅用于展示公开说明文档。
+    </footer>
+  </div>
+</body>
+</html>
