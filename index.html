@@ -109,6 +109,10 @@
     box-shadow:0 26px 56px rgba(20,40,32,.16);
   }
   .shot img{display:block;width:100%;}
+  /* 分享卡拼贴：一张竖版主卡 + 两张横版 */
+  .cards{width:468px;display:grid;grid-template-columns:200px 254px;gap:12px;align-items:center;}
+  .cards img{display:block;width:100%;border-radius:13px;box-shadow:0 20px 44px rgba(20,40,32,.18);}
+  .cards .tall{grid-row:span 2;border-radius:16px;}
   .mini{margin-top:22px;}
   .mini b{display:block;font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
   .mini span{display:block;font-size:15px;line-height:1.8;color:var(--sub);}
@@ -152,6 +156,7 @@
   @media (max-width:900px){
     .split,.split.rev{grid-template-columns:1fr;gap:44px;}
     .shot{width:100%;}
+    .cards{width:100%;max-width:468px;grid-template-columns:minmax(0,44%) minmax(0,1fr);gap:10px;}
     .split.rev .text{order:0;}
     .grid{grid-template-columns:1fr 1fr;}
     .phones{gap:14px;}
@@ -289,6 +294,43 @@
       <div class="point"><span class="tick">·</span><span>同一个页面切换<b>想喝 / 想回购</b>，不用记两个入口。</span></div>
     </div>
     <div class="phone"><img src="./img/wish.jpg" alt="心愿单与回购清单" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="wrap" id="share">
+  <div class="split rev">
+    <div class="cards">
+      <img class="tall" src="./img/share-origin.jpg" alt="产地样式分享卡" loading="lazy">
+      <img src="./img/share-magazine.jpg" alt="杂志横卡" loading="lazy">
+      <img src="./img/share-flavor.jpg" alt="风味色谱分享卡" loading="lazy">
+    </div>
+    <div class="text">
+      <span class="kicker">分享</span>
+      <h2>同一支豆，<br>六种讲法。</h2>
+      <p class="body-text">
+        产地样式把它标在世界地图上，写清产区、海拔与处理法；极简豆卡只留名字和风味；
+        杂志横卡、豆袋标签、风味色谱、打字机标签各有各的语气。
+        竖版发朋友圈，横版放进手冲日志，方形贴到小红书。
+      </p>
+      <div class="point"><span class="tick">·</span><span><b>全部在本机渲染</b>，不经过任何服务器，生成完直接存进相册。</span></div>
+      <div class="point"><span class="tick">·</span><span>卡片上会署你自己的<b>昵称</b>，不用每次手动加。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="split">
+    <div class="text">
+      <span class="kicker">年度</span>
+      <h2>一年喝了什么，<br>写成一张图。</h2>
+      <p class="body-text">
+        杯数、总用豆量、喝过的支数、平均评分——这一年买豆花了多少，摊到每杯又是多少钱。
+        再往下是三个小榜单：喝得最多的一支、最常回购的一支、最顺手的手法，还有全年冲煮了多少天。
+      </p>
+      <div class="point"><span class="tick">·</span><span>生成一张<b>竖版长图</b>，可以直接保存或发出去。</span></div>
+      <div class="point"><span class="tick">·</span><span>数据不够时会自动隐藏，不会硬凑一张空卡。</span></div>
+    </div>
+    <div class="shot"><img src="./img/yearcard.jpg" alt="年度总结长图" loading="lazy"></div>
   </div>
 </section>
 
