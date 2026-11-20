@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>豆时 BEANTIME · 把每一支豆，都喝明白</title>
-<meta name="description" content="咖啡豆库存、赏味期倒计时、冲煮记录与统计。全程离线，数据只存在你的设备上。">
+<meta name="description" content="咖啡豆库存、赏味期倒计时、冲煮记录与统计。拍一张豆卡就能录入，识别在本机完成。全程离线，数据只存在你的设备上。">
 <meta property="og:title" content="豆时 BEANTIME · 把每一支豆，都喝明白">
 <meta property="og:description" content="赏味期还剩几天、这一杯几分、这支豆值不值得再买——都在一个地方。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://beantime.app/">
 <meta property="og:image" content="https://beantime.app/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="theme-color" content="#FBF9F2">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%232F5D4C'/><ellipse cx='50' cy='54' rx='22' ry='28' transform='rotate(-18 50 54)' fill='%23E8D9B8'/><path d='M50 30c8 10 8 34 0 48' stroke='%232F5D4C' stroke-width='4' fill='none' transform='rotate(-18 50 54)'/></svg>">
 <style>
@@ -66,7 +68,16 @@
   .btn.soon b{font-weight:600;}
   .btn.soon span{font-size:12px;letter-spacing:.06em;color:var(--sub);font-weight:500;}
 
-  /* 手机 */
+  /* 手机外框 */
+  .phone{
+    width:264px;padding:9px;border-radius:42px;
+    background:linear-gradient(160deg,#3C3C3C,#101010 42%,#2C2C2C);
+    box-shadow:0 34px 70px rgba(20,40,32,.26),0 6px 16px rgba(20,40,32,.16);
+    outline:1px solid rgba(255,255,255,.14);
+    transition:transform .5s cubic-bezier(.2,.7,.3,1);
+  }
+  .phone img{display:block;width:100%;border-radius:32px;}
+
   .phones{
     display:flex;justify-content:center;align-items:flex-end;gap:26px;
     margin-top:64px;padding-bottom:10px;position:relative;
@@ -76,18 +87,16 @@
     width:min(820px,100vw);height:600px;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle,rgba(203,163,90,.16) 0%,rgba(203,163,90,0) 66%);
   }
-  .phone{
-    width:264px;padding:9px;border-radius:42px;
-    background:linear-gradient(160deg,#3C3C3C,#101010 42%,#2C2C2C);
-    box-shadow:0 34px 70px rgba(20,40,32,.26),0 6px 16px rgba(20,40,32,.16);
-    outline:1px solid rgba(255,255,255,.14);
-    transition:transform .5s cubic-bezier(.2,.7,.3,1);
-  }
-  .phone img{display:block;width:100%;border-radius:32px;}
-  .phone:nth-child(1){transform:translateY(26px) rotate(-3deg);}
-  .phone:nth-child(3){transform:translateY(26px) rotate(3deg);}
+  .phones .phone:nth-child(1){transform:translateY(26px) rotate(-3deg);}
+  .phones .phone:nth-child(3){transform:translateY(26px) rotate(3deg);}
   .phones:hover .phone{transform:translateY(16px) rotate(0);}
-  .phone.mid{width:296px;}
+  .phones .phone.mid{width:296px;}
+
+  /* 双机并排（录入 / 冲煮 / 回购这类成对的界面） */
+  .pair{display:flex;gap:16px;align-items:flex-start;}
+  .pair .phone{width:214px;padding:8px;border-radius:34px;}
+  .pair .phone img{border-radius:26px;}
+  .pair .phone:nth-child(2){margin-top:34px;}
 
   /* 章节 */
   section{padding:110px 0;}
@@ -101,7 +110,8 @@
 
   .split{display:grid;grid-template-columns:1fr auto;gap:76px;align-items:center;max-width:1040px;margin:0 auto;}
   .split.rev{grid-template-columns:auto 1fr;}
-  .split .phone{width:296px;}
+  .split>.phone{width:296px;}
+  .split .pair .phone{width:214px;}
   /* 界面局部截图（不是整台手机）：用于展示首页里的某一块 */
   .shot{
     width:430px;border-radius:20px;overflow:hidden;background:#fff;
@@ -156,20 +166,23 @@
   @media (max-width:900px){
     .split,.split.rev{grid-template-columns:1fr;gap:44px;}
     .shot{width:100%;}
+    .split>.phone{width:min(100%,340px);margin:0 auto;}
+    .pair{width:100%;gap:12px;}
+    .split .pair .phone{width:calc(50% - 6px);}
     .cards{width:100%;max-width:468px;grid-template-columns:minmax(0,44%) minmax(0,1fr);gap:10px;}
     .split.rev .text{order:0;}
     .grid{grid-template-columns:1fr 1fr;}
     .phones{gap:14px;}
-    .phone{width:calc(33.3% - 10px);}
-    .phone.mid{width:calc(33.3% - 10px);}
+    .phones .phone{width:calc(33.3% - 10px);}
+    .phones .phone.mid{width:calc(33.3% - 10px);}
     .privacy{padding:52px 28px;border-radius:22px;margin:0 16px;}
     section{padding:76px 0;}
     section.wrap{padding:76px 24px;}
   }
   @media (max-width:620px){
     .phones{margin-top:44px;}
-    .phone:nth-child(1),.phone:nth-child(3){display:none;}
-    .phone.mid{width:76%;}
+    .phones .phone:nth-child(1),.phones .phone:nth-child(3){display:none;}
+    .phones .phone.mid{width:76%;}
     .grid{grid-template-columns:1fr;}
     nav .links{gap:16px;font-size:13.5px;}
     .lede{font-size:16px;}
@@ -186,6 +199,7 @@
   <nav>
     <span class="brand"><span class="dot"></span>豆时 <small>BEANTIME</small></span>
     <span class="links">
+      <a href="#intake">录入</a>
       <a href="#features">功能</a>
       <a href="./privacy.html">隐私政策</a>
       <a href="./support.html">支持</a>
@@ -207,8 +221,8 @@
 
   <div class="phones">
     <div class="phone"><img src="./img/detail.jpg" alt="单支豆的剩余赏味与单杯成本" loading="lazy"></div>
-    <div class="phone mid"><img src="./img/home.jpg" alt="首页：赏味总览与在库豆卡"></div>
-    <div class="phone"><img src="./img/stats.jpg" alt="统计：花费、消耗与产地分布" loading="lazy"></div>
+    <div class="phone mid"><img src="./img/home.jpg" alt="首页：此刻之选、赏味总览与在库豆卡"></div>
+    <div class="phone"><img src="./img/stats.jpg" alt="统计：花费、消耗与赏味曲线" loading="lazy"></div>
   </div>
 </header>
 
@@ -219,33 +233,60 @@
       <h2>它记得每一支豆，<br>是哪天烘的。</h2>
       <p class="body-text">
         入库时填一次烘焙日，之后全部自动：养豆还差几天、赏味期剩多少、哪一天该喝掉、什么时候已经太迟。
-        首页最上面就是所有豆子的状态分布，不用一个个点开算。
+        首页最上面就是所有豆子的状态分布——几支正在赏味、几支在衰退、几支已经超出，不用一个个点开算。
       </p>
       <div class="point"><span class="tick">·</span><span><b>超过赏味期太久</b>的豆会单独提示「冷萃、奶咖或报废」，而不是继续混在待喝列表里。</span></div>
       <div class="point"><span class="tick">·</span><span><b>开封即变状态</b>，不需要你维护第二个字段。</span></div>
+      <div class="point"><span class="tick">·</span><span>这一支还剩几天、<b>每杯多少钱</b>、已经冲了几次，打开就在眼前。</span></div>
     </div>
     <div class="phone"><img src="./img/detail.jpg" alt="单支豆的剩余赏味与单杯成本" loading="lazy"></div>
   </div>
 </section>
 
-<section class="wrap">
+<section class="wrap" id="intake">
   <div class="split rev">
-    <div class="phone"><img src="./img/brew.jpg" alt="冲煮时按机型给出研磨度建议" loading="lazy"></div>
+    <div class="pair">
+      <div class="phone"><img src="./img/scan.jpg" alt="拍豆卡识别：逐项字段可修改" loading="lazy"></div>
+      <div class="phone"><img src="./img/intake.jpg" alt="入库表单只保留必要字段" loading="lazy"></div>
+    </div>
     <div class="text">
-      <span class="kicker">研磨度</span>
-      <h2>换一台磨豆机，<br>刻度不用重新猜。</h2>
+      <span class="kicker">录入</span>
+      <h2>拍一张豆卡，<br>剩下的它来填。</h2>
       <p class="body-text">
-        每条冲煮都记下机型和刻度。再冲同一支豆，它先给你一句「上次 18，偏粗，建议调到 17.5」；
-        第一次冲的新豆，就按处理法、烘焙度和养豆天数，从相似的豆子里推一个起点，并写明依据是哪几支。
+        拍照或从相册选一张，名称、品牌、烘焙度、烘焙日期、净含量，连同产区、处理法、品种与风味，
+        一起识别出来。每个字段都摊在眼前，识别得准不准一眼看得出，点一下就能改。
       </p>
-      <div class="point"><span class="tick">·</span><span><b>格数与微米分开记</b>——C40 记格数，MiloPlay 这类记 μm，结果按各自最小一格取整，不会出现 101.6μm 这种数。</span></div>
-      <div class="point"><span class="tick">·</span><span><b>每台磨豆机单独存一套最佳刻度</b>，换机器不会互相污染。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>表单只留必要项</b>：名称、品牌、烘焙度、烘焙日期、购入重量；勾了「已开封」才需要填剩余克重。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>养豆天数按烘焙度给默认值</b>，遇到特殊处理法的豆子，可以自己改成别的天数，随时一键恢复。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>选择项都是列表</b>，能搜索、能加自己的词条，不会和识别出来的内容混在一起。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>识别在本机完成</b>，图片不上传；同一张图，每次结果都一样。</span></div>
     </div>
   </div>
 </section>
 
 <section class="wrap">
   <div class="split">
+    <div class="text">
+      <span class="kicker">冲煮与评分</span>
+      <h2>记一杯，<br>比冲一杯还快。</h2>
+      <p class="body-text">
+        打开表单就带着上一杯的克重和机型刻度，只想记消耗，滑一下就好。
+        随手给个分用五颗豆：一颗 2 分、半颗 1 分；愿意认真评，再进 SCA 五维按香气、酸质、甜感、醇厚度、余韵打一遍。
+      </p>
+      <div class="point"><span class="tick">·</span><span><b>每台磨豆机单独记一套刻度</b>：C40 记格数，MiloPlay 这类记微米，按各自最小一格取整。</span></div>
+      <div class="point"><span class="tick">·</span><span><b>第一次冲的新豆</b>会按处理法、烘焙度、养豆天数从相似豆里推一个起点，并写明依据是哪几支。</span></div>
+      <div class="point"><span class="tick">·</span><span>总分和五维<b>互不打扰</b>：只记总分也能看统计，细评过的那几杯会出现在口味象限里。</span></div>
+    </div>
+    <div class="pair">
+      <div class="phone"><img src="./img/brew.jpg" alt="冲煮表单：沿用上一杯克重与刻度" loading="lazy"></div>
+      <div class="phone"><img src="./img/score.jpg" alt="五颗豆评分与 SCA 五维入口" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="split rev">
+    <div class="phone"><img src="./img/stats.jpg" alt="统计：最佳赏味曲线" loading="lazy"></div>
     <div class="text">
       <span class="kicker">统计</span>
       <h2>一年喝了多少，<br>不用凭感觉。</h2>
@@ -254,29 +295,8 @@
         告诉你它的甜区在第几天——下次买同一支，就知道该等多久再开。
       </p>
       <div class="point"><span class="tick">·</span><span><b>豆子 / 冲煮 / 消耗</b>三个维度分开看，卡片可以自己增删排序。</span></div>
-      <div class="point"><span class="tick">·</span><span><b>单杯成本</b>按实际消耗加权，不是「总价除以杯数」。</span></div>
-    </div>
-    <div class="phone"><img src="./img/curve.jpg" alt="最佳赏味曲线" loading="lazy"></div>
-  </div>
-</section>
-
-<section class="wrap">
-  <div class="split rev">
-    <div class="shot"><img src="./img/homefrag.jpg" alt="首页的此刻之选与赏味总览" loading="lazy"></div>
-    <div class="text">
-      <span class="kicker">日常</span>
-      <h2>今天喝哪支，<br>它替你想好了。</h2>
-      <p class="body-text">
-        打开首页最先看到的两块：一个告诉你现在最适合开哪支，一个告诉你哪几支快来不及了。
-      </p>
-      <div class="mini">
-        <b>此刻之选 · 推荐</b>
-        <span>按时段、赏味阶段、你给过的分数和剩余量排序。首选会写明理由——「正在赏味高峰（还剩 57 天），你给它打过 8.6 分」。</span>
-      </div>
-      <div class="mini">
-        <b>赏味提醒</b>
-        <span>全部豆子的状态摊在顶部：几支在赏味期、几支在衰退、几支已经超出。该处理的那几支单独计数，点进去就是「已超 14 天 · 建议冷萃、奶咖或报废」。</span>
-      </div>
+      <div class="point"><span class="tick">·</span><span><b>单杯成本</b>按实际消耗加权，不是「总价除以杯数」；报废的那几杯也算进去。</span></div>
+      <div class="point"><span class="tick">·</span><span>想认真一点，还有<b>口味象限</b>：酸质与醇厚度两个轴，看清自己到底偏爱哪一种。</span></div>
     </div>
   </div>
 </section>
@@ -284,16 +304,25 @@
 <section class="wrap">
   <div class="split">
     <div class="text">
-      <span class="kicker">回购</span>
-      <h2>喝过的好豆，<br>下次记得再买。</h2>
+      <span class="kicker">买过之后</span>
+      <h2>这家值不值得再买，<br>让数字说话。</h2>
       <p class="body-text">
-        想喝的进心愿单，喝过的点一下「想回购」。回购条目记着当时的克重、价格、杯数与平均分；
-        点「再买一次」，表单已经按上次的规格填好，直接生成新批次。
+        每个烘焙商买过几支、多久买一次、喝完了几支、平均打几分、一共花了多少——一张品牌页全给全。
+        喝过觉得好的标成「想回购」，下次点「再买一次」，表单已经按上次的规格填好，直接生成新批次。
       </p>
-      <div class="point"><span class="tick">·</span><span>来源豆被删掉也不影响——<b>快照还在</b>。</span></div>
-      <div class="point"><span class="tick">·</span><span>同一个页面切换<b>想喝 / 想回购</b>，不用记两个入口。</span></div>
+      <div class="mini">
+        <b>品牌档案</b>
+        <span>平均分只算真正打过分的那些杯，不会用 0 分把一支好豆拉低；分装出来的子豆不会重复计数。</span>
+      </div>
+      <div class="mini">
+        <b>心愿单与回购</b>
+        <span>想喝的和想回购的分开记，同一个页面切换。回购条目是当时的快照，就算原豆删了，克重、价格与均分还在。</span>
+      </div>
     </div>
-    <div class="phone"><img src="./img/wish.jpg" alt="心愿单与回购清单" loading="lazy"></div>
+    <div class="pair">
+      <div class="phone"><img src="./img/brand.jpg" alt="品牌档案：买豆间隔、喝完率与均分" loading="lazy"></div>
+      <div class="phone"><img src="./img/wish.jpg" alt="心愿单与回购清单" loading="lazy"></div>
+    </div>
   </div>
 </section>
 
@@ -345,9 +374,9 @@
       <p>每一次取用都留下节点，这支豆是怎么一点点喝完的，看得见。</p>
     </div>
     <div class="cell">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12l-1.5 7a4.5 4.5 0 01-9 0L6 3z"/><path d="M12 14v7"/><path d="M8 21h8"/></svg></div>
-      <h3>冲煮记录</h3>
-      <p>克重、水温、时长、评分与品鉴笔记。下次复现好喝的那一杯。</p>
+      <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5"/></svg></div>
+      <h3>SCA 五维细评</h3>
+      <p>香气、酸质、甜感、醇厚度、余韵各打一分，五项都评完才回写总分。</p>
     </div>
     <div class="cell">
       <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
@@ -355,14 +384,14 @@
       <p>这一年喝过的豆来自哪几个国家，一张地图看完，不用翻清单。</p>
     </div>
     <div class="cell">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
-      <h3>品牌档案</h3>
-      <p>多久买一次、买过的豆喝完了几支、平均打几分。数字比印象可靠。</p>
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 6-2 7-2 7h16s-2-1-2-7z"/><path d="M10 20a2 2 0 004 0"/></svg></div>
+      <h3>赏味提醒</h3>
+      <p>截止前七天的早上提醒一次，默认关闭，开了才要通知权限。</p>
     </div>
     <div class="cell">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.8 8.6a5 5 0 00-8.8-2.4 5 5 0 00-8.8 2.4c0 4.6 8.8 9.4 8.8 9.4s8.8-4.8 8.8-9.4z"/></svg></div>
-      <h3>心愿单与回购</h3>
-      <p>想试的先记下，喝过觉得好的标回购，一键按上次规格再买一次。</p>
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><path d="M16.5 13v7M13 16.5h7"/></svg></div>
+      <h3>分装与赠送</h3>
+      <p>分装出小袋、送朋友一把豆，都会从原袋扣减，剩余克重始终对得上。</p>
     </div>
     <div class="cell">
       <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
@@ -377,8 +406,8 @@
     <span class="kicker">隐私</span>
     <h2>没有账号，没有云端，<br>也没有广告。</h2>
     <p>
-      所有内容都存在这台设备的沙盒里，卸载即消失。没有网络请求，没有第三方 SDK，照片也不会上传。
-      正因为数据只在你手上，我们把「导出备份」做得很显眼——换手机之前，记得导一份。
+      所有内容都存在这台设备的沙盒里，卸载即消失。没有网络请求，没有第三方 SDK；
+      豆卡识别也在这台设备上跑，照片不会离开它。正因为数据只在你手上，我们把「导出备份」做得很显眼——换手机之前，记得导一份。
     </p>
     <p>
       核心功能永久免费，不设数量上限，也不锁你的数据。「豆时 Pro」是一次买断的可选解锁——全部分享样式加上去掉水印，
@@ -386,8 +415,8 @@
     </p>
     <div class="row">
       <div><b>0</b>网络请求</div>
-      <div><b>0</b>账号与注册</div>
-      <div><b>0</b>订阅与月费</div>
+      <div><b>0</b>图片上传</div>
+      <div><b>0</b>账号与订阅</div>
       <div><b>4+</b>年龄分级</div>
     </div>
   </div>
