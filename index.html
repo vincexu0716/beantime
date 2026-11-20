@@ -121,7 +121,9 @@
   .shot img{display:block;width:100%;}
   /* 分享卡拼贴：一张竖版主卡 + 两张横版 */
   .cards{width:468px;display:grid;grid-template-columns:200px 254px;gap:12px;align-items:center;}
-  .cards img{display:block;width:100%;border-radius:13px;box-shadow:0 20px 44px rgba(20,40,32,.18);}
+  .cards img{display:block;width:100%;border-radius:13px;box-shadow:0 20px 44px rgba(20,40,32,.18);
+    transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s;}
+  .cards img:hover{transform:translateY(-5px);box-shadow:0 28px 56px rgba(20,40,32,.24);}
   .cards .tall{grid-row:span 2;border-radius:16px;}
   .mini{margin-top:22px;}
   .mini b{display:block;font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
@@ -163,6 +165,106 @@
   footer a:hover{color:var(--accent);}
   footer .mail{margin-left:auto;}
 
+  /* ===== 交互演示：点标签或点手机换界面 ===== */
+  .demo-body{
+    display:grid;grid-template-columns:200px 300px 1fr;gap:64px;
+    align-items:center;margin-top:52px;
+  }
+  .tabs{display:flex;flex-direction:column;gap:4px;}
+  .tab{
+    display:flex;align-items:center;gap:10px;
+    padding:11px 14px;border:1px solid transparent;border-radius:12px;
+    background:none;color:var(--sub);
+    font:400 15px/1.5 "PingFang SC","SF Pro Text",-apple-system,sans-serif;
+    text-align:left;cursor:pointer;transition:background .2s,color .2s,border-color .2s;
+  }
+  .tab i{
+    width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.35;
+    flex:none;transition:opacity .2s,transform .2s;
+  }
+  .tab:hover{background:rgba(47,93,76,.06);color:var(--ink);}
+  .tab.is-on{
+    background:var(--card);border-color:var(--line);color:var(--ink);font-weight:600;
+    box-shadow:0 6px 18px rgba(31,58,49,.07);
+  }
+  .tab.is-on i{opacity:1;background:var(--gold);transform:scale(1.4);}
+
+  .demo-phone{
+    position:relative;width:300px;padding:9px;border-radius:42px;
+    background:linear-gradient(160deg,#3C3C3C,#101010 42%,#2C2C2C);
+    outline:1px solid rgba(255,255,255,.14);
+    box-shadow:0 34px 70px rgba(20,40,32,.26),0 6px 16px rgba(20,40,32,.16);
+    cursor:pointer;transition:transform .45s cubic-bezier(.2,.7,.3,1);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .demo-phone:hover{transform:translateY(-5px);}
+  .demo-phone:focus-visible{outline:2px solid var(--accent);outline-offset:6px;}
+  .demo-phone .screen{
+    position:relative;width:100%;aspect-ratio:1320/2868;
+    border-radius:32px;overflow:hidden;background:#0d0d0d;
+  }
+  .demo-phone .screen img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transform:scale(1.02);
+    transition:opacity .42s ease,transform .7s cubic-bezier(.2,.7,.3,1);
+  }
+  .demo-phone .screen img.is-on{opacity:1;transform:scale(1);}
+  .tap-hint{
+    position:absolute;left:50%;bottom:16px;transform:translateX(-50%) translateY(4px);
+    padding:5px 12px;border-radius:999px;
+    background:rgba(15,30,24,.62);color:#F3EEE2;font-size:11.5px;letter-spacing:.06em;
+    white-space:nowrap;opacity:0;pointer-events:none;
+    transition:opacity .3s,transform .3s;backdrop-filter:blur(4px);
+  }
+  .demo-phone:hover .tap-hint{opacity:1;transform:translateX(-50%);}
+
+  .demo-info{max-width:420px;}
+  .demo-idx{
+    display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--gold);font-weight:600;
+  }
+  .demo-info h3{
+    margin:14px 0 0;font-size:24px;line-height:1.4;font-weight:700;letter-spacing:-.4px;
+  }
+  .demo-info p{margin-top:12px;color:var(--sub);font-size:15.5px;line-height:1.85;}
+  .swap{animation:swapIn .42s cubic-bezier(.2,.7,.3,1);}
+  @keyframes swapIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .dotbtn{
+    width:24px;height:24px;padding:0;border:0;background:none;cursor:pointer;
+    display:grid;place-items:center;
+  }
+  .dotbtn i{
+    display:block;width:7px;height:7px;border-radius:50%;background:#D3C9B4;
+    transition:width .25s,background .25s,border-radius .25s;
+  }
+  .dotbtn.is-on i{width:20px;border-radius:4px;background:var(--accent);}
+  .demo-dots{display:flex;gap:2px;margin-top:22px;margin-left:-4px;}
+
+  /* ===== 滚动入场 ===== */
+  html.js .reveal{opacity:0;transform:translateY(26px);
+    transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.3,1);}
+  html.js .reveal.in{opacity:1;transform:none;}
+
+  /* ===== 点图放大 ===== */
+  .phone img,.shot img,.cards img{cursor:zoom-in;}
+  .lightbox{
+    position:fixed;inset:0;z-index:120;display:none;
+    align-items:center;justify-content:center;padding:56px 24px;
+    background:rgba(14,26,21,.74);backdrop-filter:blur(12px);
+  }
+  .lightbox.on{display:flex;}
+  .lightbox:focus{outline:none;}
+  .lightbox img{
+    max-width:min(92vw,520px);max-height:86vh;border-radius:20px;
+    box-shadow:0 40px 90px rgba(0,0,0,.45);
+    animation:lbIn .32s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes lbIn{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:none;}}
+  .lb-close{
+    position:absolute;top:26px;right:26px;width:44px;height:44px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);
+    color:#fff;font-size:22px;line-height:1;cursor:pointer;
+  }
+
   @media (max-width:900px){
     .split,.split.rev{grid-template-columns:1fr;gap:44px;}
     .shot{width:100%;}
@@ -175,6 +277,11 @@
     .phones{gap:14px;}
     .phones .phone{width:calc(33.3% - 10px);}
     .phones .phone.mid{width:calc(33.3% - 10px);}
+    .demo-body{grid-template-columns:1fr;justify-items:center;gap:34px;margin-top:40px;}
+    .tabs{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px;}
+    .tab{padding:9px 13px;font-size:14px;border-color:var(--line);background:var(--card);}
+    .demo-info{max-width:520px;text-align:center;}
+    .demo-dots{justify-content:center;margin-left:0;}
     .privacy{padding:52px 28px;border-radius:22px;margin:0 16px;}
     section{padding:76px 0;}
     section.wrap{padding:76px 24px;}
@@ -190,8 +297,12 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     .phone{transition:none;}
+    html.js .reveal{opacity:1;transform:none;transition:none;}
+    .demo-phone .screen img{transition:none;}
+    .swap{animation:none;}
   }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -199,9 +310,10 @@
   <nav>
     <span class="brand"><span class="dot"></span>豆时 <small>BEANTIME</small></span>
     <span class="links">
-      <a href="#intake">录入</a>
+      <a href="#demo">试一下</a>
       <a href="#features">功能</a>
-      <a href="./privacy.html">隐私政策</a>
+      <a href="#intake">录入</a>
+      <a href="./privacy.html">隐私</a>
       <a href="./support.html">支持</a>
     </span>
   </nav>
@@ -225,6 +337,40 @@
     <div class="phone"><img src="./img/stats.jpg" alt="统计：花费、消耗与赏味曲线" loading="lazy"></div>
   </div>
 </header>
+
+<section class="wrap" id="demo">
+  <span class="kicker">试一下</span>
+  <h2>七个界面，<br>点开看看它到底长什么样。</h2>
+  <p class="body-text">左边挑一个，或者直接点手机屏幕翻到下一张。全部是 App 里的真实界面。</p>
+
+  <div class="demo-body">
+    <div class="tabs" role="tablist" aria-label="切换界面">
+      <button class="tab is-on" role="tab" aria-selected="true" data-i="0"><i></i>赏味总览</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="1"><i></i>单支档案</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2"><i></i>冲煮记录</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3"><i></i>风味评分</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="4"><i></i>数据统计</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="5"><i></i>品牌档案</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="6"><i></i>心愿单</button>
+    </div>
+
+    <div class="demo-phone" id="demoPhone" role="button" tabindex="0"
+         aria-label="点一下看下一个界面，也可用左右方向键切换">
+      <div class="screen">
+        <img class="is-on" src="./img/home.jpg" alt="赏味总览">
+        <img alt="">
+      </div>
+      <span class="tap-hint">点我看下一张</span>
+    </div>
+
+    <div class="demo-info" id="demoInfo" aria-live="polite">
+      <span class="demo-idx" id="demoIdx">01 / 07</span>
+      <h3 id="demoTitle">打开就知道今天该喝哪支</h3>
+      <p id="demoDesc">三支正在赏味、一支在衰退、一支已经超出，状态摊在最上面；「此刻之选」按时段和你的评分给建议，并写明理由。</p>
+      <div class="demo-dots" id="demoDots" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
 
 <section class="wrap">
   <div class="split">
@@ -432,6 +578,175 @@
     </div>
   </footer>
 </div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="放大查看界面" tabindex="-1">
+  <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
+  <img alt="">
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 交互演示 ---------- */
+  var DEMO = [
+    { img: 'home.jpg', title: '打开就知道今天该喝哪支',
+      desc: '三支正在赏味、一支在衰退、一支已经超出，状态摊在最上面；「此刻之选」按时段和你的评分给建议，并写明理由。' },
+    { img: 'detail.jpg', title: '这支还剩几天，不用自己算',
+      desc: '剩余赏味、单杯成本、冲煮次数都在这一屏。烘焙日与开封状态一变，倒计时跟着走，不用维护第二个字段。' },
+    { img: 'brew.jpg', title: '克重和刻度，沿用上一杯',
+      desc: '打开表单就带着上次的 15 g 与 EK43 刻度；想改就滑一下尺子，只想记消耗的话两下就完。' },
+    { img: 'score.jpg', title: '五颗豆，一颗 2 分',
+      desc: '随手给个总分，半颗算 1 分；愿意认真评，再进 SCA 五维打香气、酸质、甜感、醇厚度与余韵。' },
+    { img: 'stats.jpg', title: '第几天最好喝，曲线告诉你',
+      desc: '本月冲了几次、报废多少、钱花在哪，都在一页；赏味曲线按豆龄汇总评分，峰值和掉分都写明。' },
+    { img: 'brand.jpg', title: '这家值不值得再买',
+      desc: '买过几支、多久买一次、喝完了几支、平均几分，一张页面给全，不用凭印象。' },
+    { img: 'wish.jpg', title: '喝过的好豆，下次记得买',
+      desc: '想喝的和想回购的分开记；点「再买一次」，表单按上次的规格填好，直接生成新批次。' }
+  ];
+
+  var phone = document.getElementById('demoPhone');
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var dotsBox = document.getElementById('demoDots');
+  var idxEl = document.getElementById('demoIdx');
+  var titleEl = document.getElementById('demoTitle');
+  var descEl = document.getElementById('demoDesc');
+  var info = document.getElementById('demoInfo');
+  var layers = phone ? [].slice.call(phone.querySelectorAll('.screen img')) : [];
+  var cur = 0, front = 0;
+
+  if (phone && layers.length === 2) {
+    var dots = DEMO.map(function (d, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dotbtn' + (i === 0 ? ' is-on' : '');
+      b.setAttribute('aria-label', '第 ' + (i + 1) + ' 张：' + d.title);
+      b.innerHTML = '<i></i>';
+      b.addEventListener('click', function () { go(i); });
+      dotsBox.appendChild(b);
+      return b;
+    });
+
+    var go = function (i) {
+      i = (i + DEMO.length) % DEMO.length;
+      if (i === cur) return;
+      cur = i;
+      var d = DEMO[i];
+      var back = layers[1 - front];
+      back.src = './img/' + d.img;
+      back.alt = d.title;
+      layers[front].classList.remove('is-on');
+      back.classList.add('is-on');
+      front = 1 - front;
+
+      tabs.forEach(function (t, k) {
+        t.classList.toggle('is-on', k === i);
+        t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+      dots.forEach(function (b, k) { b.classList.toggle('is-on', k === i); });
+
+      idxEl.textContent = ('0' + (i + 1)).slice(-2) + ' / 07';
+      titleEl.textContent = d.title;
+      descEl.textContent = d.desc;
+      if (!reduce) {
+        info.classList.remove('swap');
+        void info.offsetWidth;
+        info.classList.add('swap');
+      }
+    };
+
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { go(parseInt(t.dataset.i, 10)); });
+    });
+    phone.addEventListener('click', function () { go(cur + 1); });
+    phone.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+    });
+
+    // 手机上左右划也能切
+    var tx = 0, ty = 0;
+    phone.addEventListener('touchstart', function (e) {
+      tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+    }, { passive: true });
+    phone.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - tx;
+      var dy = e.changedTouches[0].clientY - ty;
+      if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy) * 1.4) go(cur + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    // 空闲时把其余几张预载进来，切换不闪白
+    var preload = function () {
+      DEMO.slice(1).forEach(function (d) { var im = new Image(); im.src = './img/' + d.img; });
+    };
+    if ('requestIdleCallback' in window) requestIdleCallback(preload, { timeout: 2500 });
+    else setTimeout(preload, 1200);
+  }
+
+  /* ---------- 滚动入场 ---------- */
+  var targets = [].slice.call(document.querySelectorAll('.split, .cards, .grid .cell, .privacy, .demo-body'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    targets = targets.filter(function (el) {
+      return el.getBoundingClientRect().top > window.innerHeight * 0.9;
+    });
+    targets.forEach(function (el, i) {
+      el.classList.add('reveal');
+      if (el.parentElement && el.parentElement.classList.contains('grid')) {
+        el.style.transitionDelay = (i % 3) * 90 + 'ms';
+      }
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+    // 兜底：万一观察器没触发，2.5 秒后全部显示
+    setTimeout(function () {
+      targets.forEach(function (el) { el.classList.add('in'); });
+    }, 2500);
+  }
+
+  /* ---------- 点图放大 ---------- */
+  var lb = document.getElementById('lightbox');
+  var lbImg = lb ? lb.querySelector('img') : null;
+  var lbClose = document.getElementById('lbClose');
+  var lastFocus = null;
+
+  function openLb(src, alt) {
+    if (!lb) return;
+    lastFocus = document.activeElement;
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    lb.focus();
+  }
+  function closeLb() {
+    if (!lb) return;
+    lb.classList.remove('on');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  if (lb) {
+    [].slice.call(document.querySelectorAll('.phone img, .shot img, .cards img')).forEach(function (im) {
+      if (im.closest('.demo-phone')) return;
+      im.addEventListener('click', function () { openLb(im.currentSrc || im.src, im.alt); });
+    });
+    lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lb.classList.contains('on')) closeLb();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
